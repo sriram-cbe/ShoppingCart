@@ -1,0 +1,51 @@
+# Build outputs
+bin/
+obj/
+
+# Rider
+.idea/
+
+# VS
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test results
+TestResults/
+*.trx
+
+# Dotnet specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.publish/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Coverage reports
+coverage/
+coverage.cobertura.xml
+lcov.info
+
+# Optional: Ignore secrets
+secrets.json

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Cart\" />
+    <None Remove="Price\" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cart\" />
+    <Folder Include="Price\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Tax\ITaxCalculation.cs" />
+    <Compile Remove="Tax\FlatTaxStrategy.cs" />
+    <Compile Remove="Tax\ZeroTaxStrategy.cs" />
+  </ItemGroup>
+</Project>
