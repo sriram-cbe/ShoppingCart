@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCart", "ShoppingCar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCart.Tests", "ShoppingCart.Tests\ShoppingCart.Tests.csproj", "{36A0223C-7C38-42CE-88E0-DDFC1F2D42BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F3C2DCB8-B3B5-42A7-A4DD-0EDC2F38AD57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{BEE8CD13-5266-428D-B51A-C71C5DEDF148}"
+	ProjectSection(SolutionItems) = preProject
+		dotnet.yml = dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,5 +34,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95E9CC8C-9F91-4BB8-899E-644ADF6E17D1}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BEE8CD13-5266-428D-B51A-C71C5DEDF148} = {F3C2DCB8-B3B5-42A7-A4DD-0EDC2F38AD57}
 	EndGlobalSection
 EndGlobal
