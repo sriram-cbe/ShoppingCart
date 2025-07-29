@@ -26,5 +26,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: Run Tests
-      run: dotnet test ShoppingCart.Tests/ShoppingCart.Tests.csproj --no-build --framework net8.0 --verbosity normal
+    - name: Run Tests with Coverage
+      run: |
+        dotnet test ShoppingCart.Tests/ShoppingCart.Tests.csproj \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./TestResults
