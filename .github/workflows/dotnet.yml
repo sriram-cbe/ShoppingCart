@@ -27,7 +27,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --configuration Release --verbosity normal
 
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME .
