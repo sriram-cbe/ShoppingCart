@@ -1,33 +1,60 @@
-﻿name: Build and Test .NET Web API
+name: Build & Deploy Shopping Cart App
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
+
+env:
+  IMAGE_NAME: shopping-cart-api
 
 jobs:
-  build:
-
-    runs-on: macos-latest
+  build-test:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x' # Change if you're using 6.0/7.0
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
+      - name: Build
+        run: dotnet build --configuration Release
 
-    - name: Run Tests with Coverage
-      run: |
-        dotnet test ShoppingCart.Tests/ShoppingCart.Tests.csproj \
-          --collect:"XPlat Code Coverage" \
-          --results-directory ./TestResults
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker image
+        run: |
+          docker tag $IMAGE_NAME ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+            docker stop cart || true && docker rm cart || true
+            docker run -d --name cart -p 80:80 --env-file .env ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
